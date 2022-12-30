@@ -10,7 +10,7 @@ CREATE table if NOT exists singers (
 
 CREATE table if NOT exists genres (
     genre_id SERIAL PRIMARY KEY,
-    name varchar(100),
+    name varchar(100) UNIQUE NOT NULL,
     description text
 );
 
