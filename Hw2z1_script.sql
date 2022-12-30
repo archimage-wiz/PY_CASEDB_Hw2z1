@@ -1,5 +1,5 @@
 
-drop table if exists singers_genres, singers_albums, singers, albums, genres, tracks;
+drop table if exists tracks_collection_dep, singers_genres_dep, singers_albums_dep, singers, albums, genres, tracks;
 
 
 CREATE table if NOT exists singers (
@@ -21,25 +21,36 @@ CREATE table if NOT exists albums (
 );
 
 CREATE table if NOT exists tracks (
-    track_id SERIAL PRIMARY KEY
+    track_id SERIAL PRIMARY KEY,
     album_id INTEGER REFERENCES albums(album_id),
     name varchar(100),
     year_div date
 );
 
+CREATE TABLE if NOT EXISTS track_collections (
+    collection_id SERIALIZABLE PRIMARY KEY,
+    name text,
+    creation_year date
+);
 
-CREATE table if NOT exists singers_genres (
-    singer_id integer REFERENCES singers(singer_id),
-    genre_id integer REFERENCES genres(genre_id),
+--- depency tables
+
+CREATE table if NOT exists singers_genres_dep (
+    singer_id integer NOT NULL REFERENCES singers(singer_id),
+    genre_id integer NOT NULL REFERENCES genres(genre_id),
     CONSTRAINT sg_pk PRIMARY KEY (singer_id, genre_id)
 );
 
-CREATE table if NOT exists singers_albums (
-    singer_id integer REFERENCES singers(singer_id),
-    album_id integer REFERENCES albums(album_id),
+CREATE table if NOT exists singers_albums_dep (
+    singer_id integer NOT NULL REFERENCES singers(singer_id),
+    album_id integer NOT NULL REFERENCES albums(album_id),
     CONSTRAINT sa_pk PRIMARY KEY (singer_id, album_id)
 );
 
-
+CREATE TABLE IF NOT EXISTS tracks_collection_dep (
+    tc_pk SERIAL PRIMARY KEY,
+    collection_id INTEGER NOT NULL REFERENCES track_collections(collection_id),
+    track_id INTEGER NOT NULL REFERENCES tracks(track_id)
+);
 
 
