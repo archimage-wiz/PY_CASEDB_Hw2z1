@@ -1,5 +1,5 @@
 
-drop table if exists tracks_collection_dep, singers_genres_dep, singers_albums_dep, singers, albums, genres, tracks;
+drop table if exists tracks_collection_dep, singers_genres_dep, singers_albums_dep, singers, albums, genres, tracks, track_collections;
 
 
 CREATE table if NOT exists singers (
@@ -28,7 +28,7 @@ CREATE table if NOT exists tracks (
 );
 
 CREATE TABLE if NOT EXISTS track_collections (
-    collection_id SERIALIZABLE PRIMARY KEY,
+    collection_id SERIAL PRIMARY KEY,
     name text,
     creation_year date
 );
